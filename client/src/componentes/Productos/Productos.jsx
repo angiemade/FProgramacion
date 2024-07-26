@@ -14,13 +14,14 @@ const Productos = () => {
   const [id, setId] = useState(null);
   const navigate = useNavigate();
 
+  //obtien los productos al ejecutar el componete 
   useEffect(() => {
     getProductos();
   }, []);
-
+// leemos los productos 
   const getProductos = async () => {
     const response = await axios.get('http://localhost:3001/productos');
-    setProductos(response.data);
+    setProductos(response.data); //actualiza el estado de la api
   };
 
   const limpiarCampos = () => {
@@ -30,27 +31,27 @@ const Productos = () => {
     setDia('');
     setId(null);
   };
-
+//CREAR/AGREGAR
   const addProducto = () => {
     axios
-      .post('http://localhost:3001/createProducto', {
+      .post('http://localhost:3001/createProducto', { //peticion post a la api
         nombre,
         cantidad_kg_gr: cantidadKgGr,
-        cantidad_unidades: cantidadUnidades || null,
+        cantidad_unidades: cantidadUnidades || null, //si esta vacio envia null
         dia: dia.split('T')[0], // Formato correcto para la fecha
       })
       .then(() => {
-        getProductos();
-        limpiarCampos();
-        Swal.fire({
+        getProductos(); //muestro si es exitoso
+        limpiarCampos(); //limpio los campos
+        Swal.fire({ //alerta de que se cero
           title: 'Producto Creado',
           text: 'El producto fue creado con éxito!',
           icon: 'success',
           timer: 3000,
         });
       })
-      .catch((error) => {
-        Swal.fire({
+      .catch((error) => { //si no es exitoso
+        Swal.fire({ //muestro alerta de error
           icon: 'error',
           title: 'Oops...',
           text: 'No se pudo crear el producto',
@@ -58,10 +59,10 @@ const Productos = () => {
         });
       });
   };
-
+//ACTUALIZAR
   const updateProducto = () => {
     axios
-      .put('http://localhost:3001/updateProducto', {
+      .put('http://localhost:3001/updateProducto', { 
         id,
         nombre,
         cantidad_kg_gr: cantidadKgGr,

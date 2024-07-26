@@ -20,10 +20,10 @@ const db = mysql.createConnection({
 
 db.connect(err => {
     if (err) {
-        console.error('Error connecting to the database:', err);
+        console.error('Error de conexion con la base de datos:', err);
         return;
     }
-    console.log('Connected to the database.');
+    console.log('Conectado con la base de datos.');
 });
 
 // Registro de usuarios
